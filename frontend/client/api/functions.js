@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const apiUrl = 'https://aglawson.uw.r.appspot.com';
-// const apiUrl = 'http://localhost:8080'
+// const apiUrl = 'https://aglawson.uw.r.appspot.com';
+const apiUrl = 'http://localhost:8080'
 export const getAuthUrl = async() => {
     const response = await axios.get(`${apiUrl}/get_auth_url`);
     return response.data;
@@ -28,8 +28,8 @@ export const Drip = async (twitter, wallet) => {
     return result.data;
 }
 
-export const AddFaucetUser = async (wallet, twitter) => {
-    const result = await axios.get(`${apiUrl}/add_faucet_user?handle=${twitter}&wallet=${wallet}`);
+export const AddFaucetUser = async (wallet, twitter, message, signature) => {
+    const result = await axios.get(`${apiUrl}/add_faucet_user?handle=${twitter}&wallet=${wallet}&message=${message}&signature=${signature}`);
     return result.data
 }
 

@@ -86,6 +86,19 @@ function App() {
     }
   }
 
+  async function getSignature () {
+    if(!signer) {
+      await getSigner()
+    }
+    const message = Date.now().toString()
+    const signature = await signer.signMessage(message)
+
+    return {
+      message: message,
+      signature: signature
+    }
+  }
+
   async function twitterStep1() {
     if(userAddress == null) {
       await init()
@@ -114,18 +127,23 @@ function App() {
     let oauth_token_secret = accessToken.oauth_token_secret
 
     const result = await TwitterLookup(oauth_token, oauth_token_secret)
-    const update = await UpdateUser(userAddress, 'twitter', result.data.username)
-    const updateUserId = await UpdateUser(userAddress, 'twitter_id', result.data.id)
-    const setAuthToken = await UpdateUser(userAddress, 'oauth_token', oauth_token)
-    const setAuthTokenSecret = await UpdateUser(userAddress, 'oauth_token_secret', oauth_token_secret)
-
     setTwitter(result.data.username)
     setAuthUrl(null)
-    const addUser = await AddFaucetUser(userAddress, result.data.username)
-    toast.success('X Connected!')
+    
+    toast.warn('Please sign in with MetaMask')
+    setCopy('Please sign in with metaMask so we can verify you are who you say you are.')
+    const signature = await getSignature();
+
+    const addUser = await AddFaucetUser(userAddress, result.data.username, signature.message, signature.signature);
+    const update = await UpdateUser(userAddress, 'twitter', result.data.username);
+    const updateUserId = await UpdateUser(userAddress, 'twitter_id', result.data.id);
+    const setAuthToken = await UpdateUser(userAddress, 'oauth_token', oauth_token);
+    const setAuthTokenSecret = await UpdateUser(userAddress, 'oauth_token_secret', oauth_token_secret);
+
+    toast.success('Login Complete!');
 
     setMessage(result.data.username);
-    setCopy(`Pleasure to meet you, ${user.handle}. Click the Drip button and you'll have your test ETH in no time.`);
+    setCopy(`Pleasure to meet you, ${result.data.username}. Click the Drip button and you'll have your test ETH in no time.`);
     return result
     } catch (error) {
         console.log(error)
@@ -153,7 +171,6 @@ function App() {
 
   return (
     <>
-      
       <strong style={{padding: '5px', color: 'black', backgroundColor: '#FFE6C8',position: 'fixed', top: '1%', left: '2%', fontFamily: 'Courier New, monospace'}}>Scroll Sepolia Faucet</strong>
       <div style={{padding: '5px', backgroundColor: '#FFE6C8',position: 'fixed', top: '7%', left: '2%', fontFamily: 'Courier New, monospace'}}><a href="https://twitter.com/0xlawson" target="_blank" rel="noopener noreferrer" style={{color: 'black', textDecoration: 'none'}}>Follow creator on X</a></div>
 
