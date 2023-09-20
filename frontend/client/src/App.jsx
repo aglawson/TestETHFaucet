@@ -135,10 +135,10 @@ function App() {
     const signature = await getSignature();
 
     const addUser = await AddFaucetUser(userAddress, result.data.username, signature.message, signature.signature);
-    const update = await UpdateUser(userAddress, 'twitter', result.data.username);
-    const updateUserId = await UpdateUser(userAddress, 'twitter_id', result.data.id);
-    const setAuthToken = await UpdateUser(userAddress, 'oauth_token', oauth_token);
-    const setAuthTokenSecret = await UpdateUser(userAddress, 'oauth_token_secret', oauth_token_secret);
+    const update = await UpdateUser(userAddress, 'twitter', result.data.username, signature.message, signature.signature);
+    const updateUserId = await UpdateUser(userAddress, 'twitter_id', result.data.id, signature.message, signature.signature);
+    const setAuthToken = await UpdateUser(userAddress, 'oauth_token', oauth_token, signature.message, signature.signature);
+    const setAuthTokenSecret = await UpdateUser(userAddress, 'oauth_token_secret', oauth_token_secret, signature.message, signature.signature);
 
     toast.success('Login Complete!');
 

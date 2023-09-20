@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const apiUrl = 'https://aglawson.uw.r.appspot.com';
-const apiUrl = 'http://localhost:8080'
+const apiUrl = 'https://aglawson.uw.r.appspot.com';
+// const apiUrl = 'http://localhost:8080'
 export const getAuthUrl = async() => {
     const response = await axios.get(`${apiUrl}/get_auth_url`);
     return response.data;
@@ -12,8 +12,8 @@ export const TwitterLookup = async (token, token_secret) => {
     return result.data;
 }
 
-export const UpdateUser = async(wallet, attribute, value) => {
-    const result = await axios.get(`${apiUrl}/update_user?wallet=${wallet}&attribute=${attribute}&value=${value}`)
+export const UpdateUser = async(wallet, attribute, value, message, signature) => {
+    const result = await axios.get(`${apiUrl}/update_user?wallet=${wallet}&attribute=${attribute}&value=${value}&message=${message}&signature=${signature}`)
     return result.data;
 }
 
