@@ -80,7 +80,7 @@ function App() {
 
       setMessage('Connect X');
       toast.success("Wallet Connected!");
-      setCopy('Great! Now just connect your X account. This is to prevent thievery. We gotta be careful out here nowadays.');
+      setCopy('Great! Now just connect your X account. This is just a one-time login to prevent thievery. We gotta be careful out here nowadays.');
     }
   }
 
@@ -127,9 +127,9 @@ function App() {
     const result = await TwitterLookup(oauth_token, oauth_token_secret)
     setTwitter(result.data.username)
     setAuthUrl(null)
-    
+
     toast.warn('Please sign in with MetaMask')
-    setCopy('Please sign in with metaMask so we can verify you are who you say you are.')
+    setCopy('Please sign in with metaMask so we can verify you are who you say you are. Make sure to use this wallet to login in the future.')
     const signature = await getSignature();
 
     const addUser = await AddFaucetUser(userAddress, result.data.username, signature.message, signature.signature);
