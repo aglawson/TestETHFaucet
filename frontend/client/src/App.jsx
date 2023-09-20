@@ -154,8 +154,8 @@ function App() {
   return (
     <>
       
-      <p style={{padding: '5px', backgroundColor: '#C68642',position: 'fixed', top: '-1%', left: '2%', fontFamily: 'Courier New, monospace'}}>Scroll Sepolia Faucet</p>
-      <div style={{padding: '5px', backgroundColor: '#C68642',position: 'fixed', top: '7%', left: '2%', fontFamily: 'Courier New, monospace'}}><a href="https://twitter.com/0xlawson" target="_blank" rel="noopener noreferrer" style={{color: 'white', textDecoration: 'none'}}>Follow creator on X</a></div>
+      <strong style={{padding: '5px', color: 'black', backgroundColor: '#FFE6C8',position: 'fixed', top: '1%', left: '2%', fontFamily: 'Courier New, monospace'}}>Scroll Sepolia Faucet</strong>
+      <div style={{padding: '5px', backgroundColor: '#FFE6C8',position: 'fixed', top: '7%', left: '2%', fontFamily: 'Courier New, monospace'}}><a href="https://twitter.com/0xlawson" target="_blank" rel="noopener noreferrer" style={{color: 'black', textDecoration: 'none'}}>Follow creator on X</a></div>
 
       <div style={{position: 'fixed', top: '1%', right: '2%'}}>
         <button onClick={() => userAddress == null ? init() : twitter == null ? twitterStep1() : twitter} style={{fontFamily: 'Courier New, monospace'}}> 
@@ -164,7 +164,7 @@ function App() {
       </div>
 
       <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
-        <div style={{position:'fixed', backgroundColor: 'snow', width: '300px', height: '400px', border: '1px solid black', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+        <div style={{position:'fixed', backgroundColor: '#FFE6C8', width: '300px', height: '400px', border: '1px solid black', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
         <h2 style={{color: 'black'}}>0.01 ETH / 24hrs</h2>
         <strong style={{display: authUrl == null ? '' : 'none' ,fontFamily: 'Courier New, monospace', color: 'black', marginTop: '-25%'}}>{copy}</strong>
         <p style={{color: 'black', display: authUrl == null ? 'none' : ''}}>Click <a href={authUrl} target='_blank'>here</a> to sign into X, then copy the code provided by X and paste it below.</p>
