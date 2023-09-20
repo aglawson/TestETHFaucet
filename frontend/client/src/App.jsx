@@ -164,6 +164,7 @@ function App() {
       return;
     }
 
+    toast.success('Your ETH was delivered!')
     setCopy(`Your ETH has been delivered. Happy building, hope to see you tomorrow!`)
   }
 
