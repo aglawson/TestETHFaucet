@@ -42,6 +42,7 @@ function App() {
         } catch (switchError) {
           console.log({ switchError })
           if (switchError.code === 4902) {
+            toast.warn('Adding Scroll Sepolia to your MetaMask');
             try {
               await window.ethereum.request({
                 method: 'wallet_addEthereumChain',
@@ -61,6 +62,7 @@ function App() {
   
               provider = new ethers.BrowserProvider(window.ethereum);
             } catch (addError) {
+              toast.error('There was an error adding the network, please refresh and try again.');
               console.error(addError);
             }
           }
@@ -70,13 +72,14 @@ function App() {
       signer = await provider.getSigner();
       setUserAddress(await signer.getAddress());
       const user = await GetUser(await signer.getAddress());
-      console.log(user)
       if(user !== null) {
         setTwitter(user.handle)
         toast.success(`Welcome Back ${user.handle}!`);
         setCopy(`Good to see ya again, ${user.handle}. Click the Drip button and you'll have your test ETH in no time.`);
+        setMessage(user.handle);
         return;
       }
+
       setMessage('Connect X');
       toast.success("Wallet Connected!");
       setCopy('Great! Now just connect your X account. This is to prevent thievery. We gotta be careful out here nowadays.');
@@ -91,7 +94,6 @@ function App() {
       return
     }
     const data = await getAuthUrl()
-    console.log(data)
     let token = data.requestToken.oauth_token
     let token_secret = data.requestToken.oauth_token_secret
     setAuthUrl(data.authUrl)
@@ -120,8 +122,9 @@ function App() {
     setTwitter(result.data.username)
     setAuthUrl(null)
     const addUser = await AddFaucetUser(userAddress, result.data.username)
-    console.log(addUser)
     toast.success('X Connected!')
+
+    setMessage(result.data.username);
     setCopy(`Pleasure to meet you, ${user.handle}. Click the Drip button and you'll have your test ETH in no time.`);
     return result
     } catch (error) {
@@ -132,7 +135,6 @@ function App() {
 
   async function drip() {
     const tx = await Drip(twitter, userAddress);
-    console.log(tx)
 
     if(tx.error) {
       if(tx.error.error) {
