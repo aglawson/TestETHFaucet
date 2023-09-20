@@ -58,9 +58,7 @@ function App() {
                   blockExplorerUrls: ['https://sepolia-blockscout.scroll.io']
                 }],
               });
-              window.location.reload();
-  
-              provider = new ethers.BrowserProvider(window.ethereum);
+              init();
             } catch (addError) {
               toast.error('There was an error adding the network, please refresh and try again.');
               console.error(addError);
