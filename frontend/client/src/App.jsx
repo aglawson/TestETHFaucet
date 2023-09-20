@@ -193,6 +193,11 @@ function App() {
         </div>
       </div>
 
+      <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <strong style={{padding: '5px', color: 'black', backgroundColor: '#FFE6C8',position: 'fixed', bottom: '5%', fontFamily: 'Courier New, monospace'}}>Please consider tipping alawson.eth to support the cost of hosting this faucet. Thank you!</strong>
+      </div>
+
+
       <ToastContainer
         position="bottom-right"
         autoClose={5000}
