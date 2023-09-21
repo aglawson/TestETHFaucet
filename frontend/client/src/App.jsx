@@ -171,7 +171,7 @@ function App() {
   return (
     <>
     <div style={{alignItems: 'center', marginTop: '15%'}}>
-      <img src='../images/scroll.svg' style={{width: '10em'}}/>
+      <img src='frontend/client/images/scroll.svg' style={{width: '10em'}}/>
       <strong style={{width: '10em',padding: '5px', color: 'black', fontFamily: 'Courier New, monospace'}}>Sepolia Faucet</strong>
     </div>
       <div style={{borderRadius: '2%', padding: '5px', backgroundColor: '#FFE6C8',position: 'fixed', top: '2%', left: '2%', fontFamily: 'Courier New, monospace'}}><a href="https://twitter.com/0xlawson" target="_blank" rel="noopener noreferrer" style={{color: 'black', textDecoration: 'none'}}>Created by 0xLawson</a></div>
