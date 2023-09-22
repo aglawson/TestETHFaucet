@@ -17,7 +17,8 @@ function App() {
   const [twitter, setTwitter] = useState(null);
   const [message, setMessage] = useState('Connect Wallet');
   const [copy, setCopy] = useState('Welcome to this humble establishment. It appears you need some more test ETH to continue building your next groundbreaking app. Feel free to top up every 24 hours! Simply connect your wallet to continue.')
-
+  const tweetText = `I'm building on Scroll thanks to scrollsepoliafaucet.com!`;
+  const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
   async function init() {
     if(userAddress !== null) return;
 
@@ -166,6 +167,8 @@ function App() {
 
     toast.success('Your ETH was delivered!')
     setCopy(`Your ETH has been delivered. Happy building, hope to see you tomorrow!`)
+
+
   }
 
   return (
@@ -175,6 +178,7 @@ function App() {
       <strong style={{width: '10em',padding: '5px', color: 'black', fontFamily: 'Courier New, monospace'}}>Sepolia Faucet</strong>
     </div>
       <div style={{borderRadius: '2%', padding: '5px', backgroundColor: '#FFE6C8',position: 'fixed', top: '2%', left: '2%', fontFamily: 'Courier New, monospace'}}><a href="https://twitter.com/0xlawson" target="_blank" rel="noopener noreferrer" style={{color: 'black', textDecoration: 'none'}}>Created by 0xLawson</a></div>
+      <a style={{position: 'fixed', top: '2%', right: '2%', borderRadius: '2%', fontFamily: 'Courier New, monospace'}} href={url} target="_blank" rel="noopener noreferrer"><button>Tweet About Us!</button></a>
 
       {/* <div style={{position: 'fixed', top: '1%', right: '2%'}}>
         <button onClick={() => userAddress == null ? init() : twitter == null ? twitterStep1() : twitter} style={{fontFamily: 'Courier New, monospace'}}> 
@@ -186,7 +190,7 @@ function App() {
         <div style={{position:'fixed', backgroundColor: '#FFE6C8', width: '300px', height: '400px', borderRadius: '2%', border: '1px solid black', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', top: '20%'}}>
         <h2 style={{color: 'black'}}>0.01 ETH / 24hrs</h2>
         <strong style={{display: authUrl == null ? '' : 'none' ,fontFamily: 'Courier New, monospace', color: 'black', marginTop: '-25%'}}>{copy}</strong>
-        <p style={{color: 'black', display: authUrl == null ? 'none' : ''}}>Click <a href={authUrl} target='_blank'>here</a> to sign into X, then copy the code provided by X and paste it below.</p>
+        <p style={{color: 'black', display: authUrl == null ? 'none' : '', fontFamily: 'Courier New, monospace'}}>Click <a href={authUrl} target='_blank'>here</a> to sign into X, then copy the code provided by X and paste it below.</p>
         <input id='pin'style={{display: authUrl == null ? 'none' : '', marginTop: '15%', width: '60%', height: '10%', fontFamily: 'Courier New, monospace', color: 'black', backgroundColor: 'white', margin: 'auto'}} type="text" placeholder="Auth Code"/>
         <button onClick={() => userAddress == null ? init() : twitter == null ? twitterStep1() : twitter} style={{fontFamily: 'Courier New, monospace', display: twitter == null && authUrl == null ? '' : 'none'}}>
           {message}
