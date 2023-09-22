@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import {ethers} from 'ethers'
@@ -24,6 +24,16 @@ function App() {
     console.log(users.users)
     setUserCount(users.users);
   }
+
+  useEffect(() => {
+    // Scroll to bottom of the page
+    window.scrollTo(0, document.body.scrollHeight);
+
+    // Scroll to top of the page after a delay
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 1000); // Adjust delay as needed
+  }, []);
 
   const tweetText = `I'm building on Scroll thanks to scrollsepoliafaucet.com!`;
   const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
