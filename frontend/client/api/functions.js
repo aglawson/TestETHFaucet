@@ -37,3 +37,9 @@ export const GetUser = async (wallet) => {
     const result = await axios.get(`${apiUrl}/get_user?wallet=${wallet}`);
     return result.data
 }
+
+export const GetFaucetUserCount = async () => {
+    const result = await axios.get(`${apiUrl}/get_faucet_user_count`);
+    console.log(result)
+    return result.data
+}

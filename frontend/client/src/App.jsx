@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import {ethers} from 'ethers'
 import { ToastContainer, toast } from 'react-toastify';
-import { getAuthUrl, TwitterLookup, UpdateUser, getAccessToken, Drip, AddFaucetUser, GetUser } from '../api/functions';
+import { getAuthUrl, TwitterLookup, UpdateUser, getAccessToken, Drip, AddFaucetUser, GetUser, GetFaucetUserCount } from '../api/functions';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css'
 
@@ -17,6 +17,14 @@ function App() {
   const [twitter, setTwitter] = useState(null);
   const [message, setMessage] = useState('Connect Wallet');
   const [copy, setCopy] = useState('Welcome to this humble establishment. It appears you need some more test ETH to continue building your next groundbreaking app. Feel free to top up every 24 hours! Simply connect your wallet to continue.')
+  const [userCount, setUserCount] = useState(null);
+
+  async function getUserCount() {
+    const users = await GetFaucetUserCount();
+    console.log(users.users)
+    setUserCount(users.users);
+  }
+
   const tweetText = `I'm building on Scroll thanks to scrollsepoliafaucet.com!`;
   const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
   async function init() {
@@ -173,18 +181,12 @@ function App() {
 
   return (
     <>
-    <div style={{alignItems: 'center', marginTop: '15%'}}>
+    <div onLoad={() => getUserCount()}style={{alignItems: 'center', marginTop: '15%'}}>
       <img src='/images/scroll.svg' style={{width: '10em'}}/>
       <strong style={{width: '10em',padding: '5px', color: 'black', fontFamily: 'Courier New, monospace'}}>Sepolia Faucet</strong>
     </div>
       <div style={{borderRadius: '2%', padding: '5px', backgroundColor: '#FFE6C8',position: 'fixed', top: '2%', left: '2%', fontFamily: 'Courier New, monospace'}}><a href="https://twitter.com/0xlawson" target="_blank" rel="noopener noreferrer" style={{color: 'black', textDecoration: 'none'}}>Created by 0xLawson</a></div>
-      <a style={{position: 'fixed', top: '2%', right: '2%', borderRadius: '2%', fontFamily: 'Courier New, monospace'}} href={url} target="_blank" rel="noopener noreferrer"><button>Tweet About Us!</button></a>
-
-      {/* <div style={{position: 'fixed', top: '1%', right: '2%'}}>
-        <button onClick={() => userAddress == null ? init() : twitter == null ? twitterStep1() : twitter} style={{fontFamily: 'Courier New, monospace'}}> 
-          {message}
-        </button>
-      </div> */}
+      <a style={{width: '12em', position: 'fixed', top: '2%', right: '2%', borderRadius: '2%', fontFamily: 'Courier New, monospace'}} href={url} target="_blank" rel="noopener noreferrer">Tweet About Us!</a>
 
       <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
         <div style={{position:'fixed', backgroundColor: '#FFE6C8', width: '300px', height: '400px', borderRadius: '2%', border: '1px solid black', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', top: '20%'}}>
@@ -200,10 +202,9 @@ function App() {
         </div>
       </div>
 
-      <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-        <strong style={{borderRadius: '2%', padding: '5px', color: 'black', backgroundColor: '#FFE6C8',position: 'fixed', bottom: '2%', fontFamily: 'Courier New, monospace'}}>Please consider tipping alawson.eth to support the cost of hosting this faucet. Thank you!</strong>
+      <div style={{display: userCount == null ? 'none' : 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <strong style={{borderRadius: '2%', padding: '5px', color: 'black', backgroundColor: '#FFE6C8',position: 'fixed', bottom: '2%', fontFamily: 'Courier New, monospace'}}>This faucet supports {userCount} builders on Scroll 💪</strong>
       </div>
-
 
       <ToastContainer
         position="bottom-right"
