@@ -190,7 +190,7 @@ function App() {
         <div style={{position:'fixed', backgroundColor: '#FFE6C8', width: '300px', height: '400px', borderRadius: '2%', border: '1px solid black', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', top: '20%'}}>
         <h2 style={{color: 'black'}}>0.01 ETH / 24hrs</h2>
         <strong style={{display: authUrl == null ? '' : 'none' ,fontFamily: 'Courier New, monospace', color: 'black', marginTop: '-25%'}}>{copy}</strong>
-        <p style={{color: 'black', display: authUrl == null ? 'none' : '', fontFamily: 'Courier New, monospace'}}>Click <a href={authUrl} target='_blank'>here</a> to sign into X, then copy the code provided by X and paste it below.</p>
+        <strong style={{color: 'black', display: authUrl == null ? 'none' : '', fontFamily: 'Courier New, monospace'}}>Click <a href={authUrl} target='_blank'>here</a> to sign into X, then copy the code provided by X and paste it below.</strong>
         <input id='pin'style={{display: authUrl == null ? 'none' : '', marginTop: '15%', width: '60%', height: '10%', fontFamily: 'Courier New, monospace', color: 'black', backgroundColor: 'white', margin: 'auto'}} type="text" placeholder="Auth Code"/>
         <button onClick={() => userAddress == null ? init() : twitter == null ? twitterStep1() : twitter} style={{fontFamily: 'Courier New, monospace', display: twitter == null && authUrl == null ? '' : 'none'}}>
           {message}
