@@ -18,6 +18,14 @@ contract Faucet is Ownable {
     }
     Fund[] public funds;
 
+    /**
+        @dev denominated in terms of 0.1%
+        i.e. if dripPercentage = 1, value of 'amount' in drip() will be balance * 0.001
+        1% => dripPercentage = 10
+        10% => dripPercentage = 100
+     */
+    uint8 public dripPercentage;
+
     event Claimed(address recipient, uint256 amount);
     event ThankYou(address funder, uint256 amount);
 
@@ -31,15 +39,13 @@ contract Faucet is Ownable {
         emit ThankYou(_msgSender(), msg.value);
     }
 
-    function drip(address recipient, uint256 amount) external onlyOwner {
-        if(amount == 0) 
-            revert("drip amount must be > 0");
-
-        if(amount > 0.05 ether) 
-            revert("don't be greedy! claim amount too high");
-
-        if(address(this).balance < amount)
-            revert("low on eth :'(");
+    function drip(address recipient) external onlyOwner {
+        if(dripPercentage == 0) 
+            revert("Owner has not initialized");
+        if(address(this).balance == 0)
+            revert("Contract is empty");
+        
+        uint256 amount = (address(this).balance / 1000) * dripPercentage;
 
         if(block.timestamp - lastClaim[recipient] < 86400)
             revert("keep building, come back later");
@@ -58,6 +64,10 @@ contract Faucet is Ownable {
         (bool success,) = payable(owner()).call{value: address(this).balance}("");
         if(!success)
             revert("transfer fail");
+    }
+
+    function setDripPercentage(uint8 _dripPercentage) external onlyOwner {
+        dripPercentage = _dripPercentage;
     }
 
 
