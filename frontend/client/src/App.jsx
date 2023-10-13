@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import {ethers} from 'ethers'
 import { ToastContainer, toast } from 'react-toastify';
-import { getAuthUrl, TwitterLookup, UpdateUser, getAccessToken, Drip, AddFaucetUser, GetUser, GetFaucetUserCount } from '../api/functions';
+import { getAuthUrl, TwitterLookup, UpdateUser, getAccessToken, Drip, AddFaucetUser, GetUser, GetFaucetUserCount, GetDripAmount } from '../api/functions';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css'
 
@@ -18,6 +18,7 @@ function App() {
   const [message, setMessage] = useState('Connect Wallet');
   const [copy, setCopy] = useState('Welcome to this humble establishment. It appears you need some more test ETH to continue building your next groundbreaking app. Feel free to top up every 24 hours! Simply connect your wallet to continue.')
   const [userCount, setUserCount] = useState(null);
+  const [dripAmount, setDripAmount] = useState(null)
 
   async function getUserCount() {
     const users = await GetFaucetUserCount();
@@ -25,9 +26,15 @@ function App() {
     setUserCount(users.users);
   }
 
+  async function getDripAmount() {
+    const amount = await GetDripAmount();
+    setDripAmount(amount.amount.toFixed(3))
+  }
+
   useEffect(() => {
     // Scroll to bottom of the page
     window.scrollTo(0, document.body.scrollHeight);
+    getDripAmount()
 
     // Scroll to top of the page after a delay
     setTimeout(() => {
@@ -200,7 +207,7 @@ function App() {
 
       <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
         <div style={{position:'fixed', backgroundColor: '#FFE6C8', width: '300px', height: '400px', borderRadius: '2%', border: '1px solid black', padding: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', top: '20%'}}>
-        <h2 style={{color: 'black'}}>0.01 ETH / 24hrs</h2>
+        <h2 style={{color: 'black'}}>{dripAmount} ETH / 24hrs</h2>
         <strong style={{display: authUrl == null ? '' : 'none' ,fontFamily: 'Courier New, monospace', color: 'black', marginTop: '-25%'}}>{copy}</strong>
         <strong style={{color: 'black', display: authUrl == null ? 'none' : '', fontFamily: 'Courier New, monospace'}}>Click <a href={authUrl} target='_blank'>here</a> to sign into X, then copy the code provided by X and paste it below.</strong>
         <input id='pin'style={{display: authUrl == null ? 'none' : '', marginTop: '15%', width: '60%', height: '10%', fontFamily: 'Courier New, monospace', color: 'black', backgroundColor: 'white', margin: 'auto'}} type="text" placeholder="Auth Code"/>
