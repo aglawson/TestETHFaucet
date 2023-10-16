@@ -220,7 +220,7 @@ function App() {
       </div>
 
       <div style={{display: userCount == null ? 'none' : 'flex', justifyContent: 'center', alignItems: 'center'}}>
-        <strong style={{borderRadius: '2%', padding: '5px', color: 'black', backgroundColor: '#FFE6C8',position: 'fixed', bottom: '2%', fontFamily: 'Courier New, monospace'}}>This faucet supports {userCount} builders on Scroll 💪</strong>
+        <strong style={{borderRadius: '2%', padding: '5px', color: 'black', backgroundColor: '#FFE6C8',position: 'fixed', bottom: '2%', fontFamily: 'Courier New, monospace'}}>Supporting {userCount} builders on Scroll 💪</strong>
       </div>
 
       <ToastContainer
