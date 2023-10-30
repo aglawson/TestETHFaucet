@@ -95,18 +95,18 @@ function App() {
 
       signer = await provider.getSigner();
       setUserAddress(await signer.getAddress());
-      const user = await GetUser(await signer.getAddress());
-      if(user !== null) {
-        setTwitter(user.handle)
-        toast.success(`Welcome Back ${user.handle}!`);
-        setCopy(`Good to see ya again, ${user.handle}. Click the Drip button and you'll have your test ETH in no time.`);
-        setMessage(user.handle);
-        return;
+      let addy = await signer.getAddress()
+      const user = await GetUser(addy);
+      if(user === null) {
+        const addUser = await AddFaucetUser(addy);
+        console.log(addUser)
       }
 
-      setMessage('Connect X');
+
+      // setMessage('Connect X');
       toast.success("Wallet Connected!");
-      setCopy('Great! Now just connect your X account. This is just a one-time login to prevent thievery. We gotta be careful out here nowadays.');
+      // setCopy('Great! Now just connect your X account. This is just a one-time login to prevent thievery. We gotta be careful out here nowadays.');
+      setCopy(`Welcome! Click the Drip button and you'll have your test ETH in no time.`);
     }
   }
 
@@ -131,6 +131,7 @@ function App() {
       return
     }
     const data = await getAuthUrl()
+    console.log(data)
     let token = data.requestToken.oauth_token
     let token_secret = data.requestToken.oauth_token_secret
     setAuthUrl(data.authUrl)
@@ -176,7 +177,7 @@ function App() {
   }
 
   async function drip() {
-    const tx = await Drip(twitter, userAddress);
+    const tx = await Drip(userAddress);
 
     if(tx.error) {
       if(tx.error.error) {
@@ -192,8 +193,6 @@ function App() {
 
     toast.success('Your ETH was delivered!')
     setCopy(`Your ETH has been delivered. Happy building, hope to see you tomorrow!`)
-
-
   }
 
   return (
@@ -211,11 +210,11 @@ function App() {
         <strong style={{display: authUrl == null ? '' : 'none' ,fontFamily: 'Courier New, monospace', color: 'black', marginTop: '-25%'}}>{copy}</strong>
         <strong style={{color: 'black', display: authUrl == null ? 'none' : '', fontFamily: 'Courier New, monospace'}}>Click <a href={authUrl} target='_blank'>here</a> to sign into X, then copy the code provided by X and paste it below.</strong>
         <input id='pin'style={{display: authUrl == null ? 'none' : '', marginTop: '15%', width: '60%', height: '10%', fontFamily: 'Courier New, monospace', color: 'black', backgroundColor: 'white', margin: 'auto'}} type="text" placeholder="Auth Code"/>
-        <button onClick={() => userAddress == null ? init() : twitter == null ? twitterStep1() : twitter} style={{fontFamily: 'Courier New, monospace', display: twitter == null && authUrl == null ? '' : 'none'}}>
+        <button onClick={() => userAddress == null ? init() : ''} style={{fontFamily: 'Courier New, monospace', display: userAddress == null ? '' : 'none'}}>
           {message}
         </button>
         <button style={{fontFamily: 'Courier New, monospace', display: authUrl == null ? 'none' : '' }} onClick={(e) => twitterStep2(e, accessToken)}>{'Submit Code'}</button>
-        <button style={{fontFamily: 'Courier New, monospace', display: userAddress !== null && twitter !== null ? '' : 'none'}} onClick={() => drip()}>Drip</button>
+        <button style={{fontFamily: 'Courier New, monospace', display: userAddress !== null ? '' : 'none'}} onClick={() => drip()}>Drip</button>
         </div>
       </div>
 

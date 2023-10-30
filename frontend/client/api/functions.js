@@ -23,13 +23,13 @@ export const getAccessToken = async (pin, requestToken) => {
     return result.data;
 }
 
-export const Drip = async (twitter, wallet) => {
-    const result = await axios.get(`${apiUrl}/drip?twitter=${twitter}&wallet=${wallet}`);
+export const Drip = async (wallet) => {
+    const result = await axios.get(`${apiUrl}/drip?wallet=${wallet}`);
     return result.data;
 }
 
-export const AddFaucetUser = async (wallet, twitter, message, signature) => {
-    const result = await axios.get(`${apiUrl}/add_faucet_user?handle=${twitter}&wallet=${wallet}&message=${message}&signature=${signature}`);
+export const AddFaucetUser = async (wallet) => {
+    const result = await axios.get(`${apiUrl}/add_faucet_user?wallet=${wallet}`);
     return result.data
 }
 
